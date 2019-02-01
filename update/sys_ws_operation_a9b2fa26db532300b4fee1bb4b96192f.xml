@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>get_asset</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+// Get value from the user_name path parameter passed in the URL
+var requestAsset = request.pathParams.asset_tag;	
+// Get value of the ni_query query parameter passed in the URL
+var requestAssetQuery = request.queryParams.asset_search;
+	
+// Query the sys_user table to get the user record for the user passed in
+// the user_id path parameter.  
+var requestAssetTag = new GlideRecord('alm_asset');
+		//gs.info(requestAssetTag.getTableName());
+requestAssetTag.get('asset_tag',requestAsset);									  	
+	
+//var requestAssetStatus = new GlideRecord('sys_choice');
+		//gs.info(requestAssetTag.getTableName());
+	//requestAssetStatus.get('label',requestAssetTag.install_status);	
+	//requestAssetStatus.get('value','requestAssetTag.install_status');
+//Create a body object.  Add property value pairs to the body.
+var body = {};
+body.asset = {"Asset Tag": requestAssetTag.asset_tag,
+"Display Name": requestAssetTag.display_name,		  
+"Asset SysID": requestAssetTag.sys_id,
+"Asset Status": requestAssetTag.install_status,
+"Serial Number": requestAssetTag.serial_number,
+"Location": requestAssetTag.location.name,
+"Department": requestAssetTag.department.name,
+"Model Category": requestAssetTag.model_category.name,
+"Model": requestAssetTag.model.name};	
+				
+// Send the response object, which is returned to the requestor, to the body object.
+response.setBody(body);
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_58872_needit/needit_api/get_asset/{asset_tag}</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/get_asset/{asset_tag}</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-02-01 15:26:47</sys_created_on>
+        <sys_id>a9b2fa26db532300b4fee1bb4b96192f</sys_id>
+        <sys_mod_count>62</sys_mod_count>
+        <sys_name>get_asset</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_ws_operation_a9b2fa26db532300b4fee1bb4b96192f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-02-01 18:03:46</sys_updated_on>
+        <web_service_definition display_value="NeedIt API">3db0eae6db132300b4fee1bb4b961921</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>
